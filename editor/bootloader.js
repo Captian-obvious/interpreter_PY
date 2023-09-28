@@ -66,7 +66,7 @@ if (app.ERROR!=true) {
     app.loadResource('SCRIPT','buttons.js');
 };
 if (app.ERROR!=true) {
-    var contain = document.getElementById('app-container');
+    var contain = document.getElementById('app_container');
     contain.innerHTML = `
     <div id='app'>\n
         <div id='toolbar'>\n
