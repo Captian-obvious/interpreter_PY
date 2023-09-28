@@ -56,14 +56,28 @@ app.loadResource = function(t,src){
     };
 };
 app.loadResource('STYLESHEET','editor.css');
-app.loadResource('STYLESHEET','fonts.css');
-app.loadResource('SCRIPT','core.js');
-app.loadResource('SCRIPT','buttons.js');
+if (app.ERROR!=true) {
+    app.loadResource('STYLESHEET','fonts.css');
+};
+if (app.ERROR!=true) {
+    app.loadResource('SCRIPT','core.js');
+};
+if (app.ERROR!=true) {
+    app.loadResource('SCRIPT','buttons.js');
+};
 if (app.ERROR!=true) {
     var contain = document.getElementById('app-container');
     contain.innerHTML = `
     <div id='app'>\n
-        <div id='toolbar'></div>\n
+        <div id='toolbar'>\n
+            <div id='home'></div>\n
+            <div id='keybinds'>n\
+                <p id='keybind_text' class='red2' hidden>\n
+                    Find: CTRL + F<br>
+                    Find & Replace: CTRL + H<br>
+                </p>\n
+            </div>\n
+        </div>\n
         <div id='text_area'></div>\n
     </div>
     `;
