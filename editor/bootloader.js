@@ -30,7 +30,7 @@ app.HANDLE_ERROR = function(error,arg) {
     return returned
 };
 app.checkResource = function(src) {
-    var video = document.createElement('video');
+    var video = document.createElement('img');
     video.onload = function() {
     };
     video.onerror = function() {
