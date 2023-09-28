@@ -21,7 +21,9 @@ app.ERROR_MESSAGES = {
     ERR_UNKNOWN: 'ERROR: An unknown error has occured.',
 };
 app.HANDLE_ERROR = function(error,arg) {
-
+    if (error === 'ERROR: Resources failed to load. (resource)'){
+        
+    }
 };
 app.checkResource = function(src) {
     var video = document.createElement('video');
