@@ -40,12 +40,14 @@ app.checkResource = function(src) {
 };
 app.loadResource = function(t,src){
     if (t=='SCRIPT'){
+        app.checkResource(src);
         var v = document.createElement('script');
         v.setAttribute('src',src);
         v.setAttribute('data-client',app.REQUEST_CLIENT);
         document.head.appendChild(v);
     };
     if (t=='STYLESHEET'){
+        app.checkResource(src);
         var v = document.createElement('link');
         v.setAttribute('rel', 'stylesheet')
         v.setAttribute('href',src);
