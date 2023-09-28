@@ -25,7 +25,7 @@ app.HANDLE_ERROR = function(error,arg) {
     var returned = error
     app.ERROR = true;
     if (error === 'ERROR: Resources failed to load. (resource)') {
-        returned = error.replace('resource',location.protocol+location.pathname+arg);
+        returned = error.replace('resource',arg);
     };
     return returned
 };
