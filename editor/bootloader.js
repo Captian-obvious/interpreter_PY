@@ -13,6 +13,7 @@ app.IS_LOADED = false;
 app.CURRENT_MODE = 'ace/mode/python';
 app.CURRENT_DOCUMENT = null;
 app.NEW_DOCUMENT = null;
+app.ERROR = null;
 app.ERROR_MESSAGES = {
     ERR_NO_CLIENT: 'ERROR: Client Not Specified',
     ERR_NO_CORE: 'ERROR: Core unable to load (404).',
@@ -22,8 +23,9 @@ app.ERROR_MESSAGES = {
 };
 app.HANDLE_ERROR = function(error,arg) {
     var returned = error
+    app.ERROR = true;
     if (error === 'ERROR: Resources failed to load. (resource)') {
-        returned = error.replace('resource',arg);
+        returned = error.replace('resource',location.protocol+location.pathname+arg);
     };
     return returned
 };
@@ -55,3 +57,12 @@ app.loadResource('STYLESHEET','editor.css');
 app.loadResource('STYLESHEET','fonts.css');
 app.loadResource('SCRIPT','core.js');
 app.loadResource('SCRIPT','buttons.js');
+if (app.ERROR!=true) {
+    var contain = document.getElementById('app-container');
+    contain.innerHTML = `
+    <div id='app'>\n
+        <div id='toolbar'></div>\n
+        <div id='text_area'></div>\n
+    </div>
+    `;
+};
