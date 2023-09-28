@@ -5,8 +5,12 @@ app.REQUEST_CLIENT='1mmdeje93oa8745t4jtg4jj4o4045utj0945h49432j3';
 app.EDITOR = null;
 app.APP_NAME='Python Interpreter';
 app.BOOTLOADER = '82jdm43j3499';
-app.APP_RESOURCES = null;
+app.APP_RESOURCES = {};
+app.CORE = null;
+app.USER = null;
 app.LOADED = false;
+app.CURRENT_EDITING_MODE = 'python';
+app.CURRENT_DOCUMENT = null;
 app.loadResource = function(src){
     var v = document.createElement('script');
     v.setAttribute('src',src);
@@ -16,8 +20,6 @@ app.loadResource = function(src){
 app.boot = function() {
     app.loadResource('core.js');
     app.SESSION = new Date();
-    app.APP_RESOURCES = {};
-    app.
     setTimeout(function(){
         app.CORE = window.CORE
     },30);
