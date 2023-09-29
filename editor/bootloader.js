@@ -1,4 +1,5 @@
 window.app = {};
+window.STATE = {};
 app.VERSION = '1.0.0';
 app.CURRENT_SESSION = null;
 app.EDITOR_VERSION = '1.0.0';
@@ -62,7 +63,7 @@ function handleDomLoaded() {
         if (domLoaded) return;
         if (domLoaded = !0, console.log("In handle Dom Loaded(). domLoaded: " + domLoaded + "; isSupportedBrowser: " + isSupportedBrowser), !adsenseScriptLoadError && adLoadedDuringInit && isSupportedBrowser || (showEl(document.getElementById("topBanner"), !1), showEl(document.getElementById("adHeading"), !1), document.getElementById("mainEditorContainer").classList.add("adjustedHeightForNoAdShown"), document.getElementById("mainScrollableContent").classList.add("adjustedHeightForNoAdShown"), document.getElementById("unsupportedBrowserContent").classList.add("adjustedHeightForNoAdShown"), document.getElementById("appLoadErrorContent").classList.add("adjustedHeightForNoAdShown"), document.getElementById("mainBackgroundSpinner").classList.add("adjustedHeightForNoAdShownBackgroundSpinner")), !isSupportedBrowser) return void updateUiAfterDomLoadedForUnsupportedBrowser();
         if (isAppLoadFailure) return void maybeUpdateUiAForAppLoadFailure(appLoadFailureMessage);
-        document.getElementById("copyright").textContent += " v" + te.VERSION, updateUiForDevice();
+        document.getElementById("copyright").textContent += " v" + app.VERSION, updateUiForDevice();
         var a = null != getFileId(),
             b = a ? getReferringSource() : "general";
         a && "gmail" != b && (b = "drive");
@@ -133,6 +134,149 @@ function hasReferringApp() {
 function clearReferringApp() {
     STATE.referringApp = null
 }
+
+function getReferringAppName() {
+    return STATE.referringApp
+}
+
+function getParentFolderId() {
+    return STATE.folderId
+}
+
+function getFileId() {
+    var a = STATE.ids;
+    return a ? a.length && 0 < a.length ? a[0] : null : null
+}
+
+function clearState() {
+    STATE = {}
+}
+
+function parseUrlState() {
+    var a = null;
+    try {
+        var b = getUrlParam("state");
+        if (!b) return {};
+        a = JSON.parse(b)
+    } catch (a) {
+        return logImpression("json_state_parse_error", "app_load", a), {}
+    }
+    return a || {}
+}
+
+function isUrlParamKeyPresent(a) {
+    a = a.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var b = new RegExp("[\\?&]" + a),
+        c = b.exec(location.search);
+    return null !== c
+}
+
+function getUrlParam(a) {
+    a = a.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var b = new RegExp("[\\?&]" + a + "=([^&#]*)"),
+        c = b.exec(location.search);
+    return null === c ? "" : decodeURIComponent(c[1].replace(/\+/g, " "))
+}
+
+function onGapiScriptLoadError(a) {
+    handleScriptLoadError("gapi_load_error", a, "hasBeenAutoRetried: " + hasGapiScriptBeenAutoRetried), hasGapiScriptBeenAutoRetried ? isForOpen() && (isAppLoadFailure = !0, appLoadFailureMessage = "gapi_load_error: " + getErrorStringFromErrorOrEvent(a), maybeUpdateUiAForAppLoadFailure(appLoadFailureMessage)) : (hasGapiScriptBeenAutoRetried = !0, loadGapiScript())
+}
+
+function onMainAppScriptLoadError(a) {
+    handleScriptLoadError("main_app_script_load_error", "hasBeenAutoRetried: " + hasMainAppScriptBeenAutoRetried), hasMainAppScriptBeenAutoRetried ? (isAppLoadFailure = !0, appLoadFailureMessage = "main_app_script_load_error: " + getErrorStringFromErrorOrEvent(a), maybeUpdateUiAForAppLoadFailure(appLoadFailureMessage)) : (hasMainAppScriptBeenAutoRetried = !0, loadMainAppScript())
+}
+
+function onJsChardetScriptLoadError() {
+    handleScriptLoadError("jschardet_script_load_error", "hasBeenAutoRetried: " + hasJsChardetScriptBeenAutoRetried), hasJsChardetScriptBeenAutoRetried || (hasJsChardetScriptBeenAutoRetried = !0, loadJsChardetScript())
+}
+
+function onAceEditorScriptLoadError(a) {
+    handleScriptLoadError("ace_editor_script_load_error", "hasBeenAutoRetried: " + hasAceEditorScriptBeenAutoRetried), hasAceEditorScriptBeenAutoRetried ? (isAppLoadFailure = !0, appLoadFailureMessage = "ace_editor_script_load_error: " + getErrorStringFromErrorOrEvent(a), maybeUpdateUiAForAppLoadFailure(appLoadFailureMessage)) : (hasAceEditorScriptBeenAutoRetried = !0, loadAceEditorScript())
+}
+
+function getErrorStringFromErrorOrEvent(a) {
+    var b = "(" + te.VERSION + ")",
+        c = a && a.originalEvent ? a.originalEvent instanceof Event : a instanceof Event;
+    if (c) {
+        var d = a.message || "",
+            e = a.filename || "",
+            f = a.lineno || "",
+            g = a.colno || "",
+            h = a.error || "",
+            i = a.target || "",
+            j = a.type || "",
+            k = i && i.src ? i.src : "";
+        d && (d = " - " + d), e && (e = " - " + e), h && (h = ": " + h), i && (i = " - " + i), d && (d = " - " + d), j && (j = " - " + j), k && (k = " - " + k);
+        var l = d + j + i + k + e + " @ (" + f + ", " + g + ")" + h;
+        return b + l
+    }
+    return b + " - " + a
+}
+
+function handleScriptLoadError(a, b) {
+    var c = getErrorStringFromErrorOrEvent(b);
+    console.log("Script Load Error: " + a + " - " + c), logImpression(a, "script_load_error", c, void 0, void 0, !0)
+}
+
+function bindFn(a) {
+    return a.call.apply(a.bind, arguments)
+}
+
+function updateButtonTextHelper(a, b, c) {
+    var d = document.getElementById(a);
+    d && (d.childNodes[2] && (d.childNodes[2].textContent = b), c && (d.children[0].textContent = c))
+}
+
+function updateUiForDevice() {
+    try {
+        var a = detectDevice();
+        ("phone" == a || "device" == a) && (updateButtonTextHelper("openFileFromDriveButton", "Open From Drive"), updateButtonTextHelper("createNewTextFileButton", "New File"), updateButtonTextHelper("openFileFromComputerButton", "Open From Phone", "smartphone"), "device" == a || "phone" == a)
+    } catch (a) {
+        logImpression("update_ui_for_device_err", "app_load", a)
+    }
+}
+
+function maybeHandleDomLoadedOrRegister() {
+    if (!document) throw new Error("Document not available in maybeHandleDomLoadedOrRegister()");
+    "loading" === document.readyState ? (console.log("maybeHandleDomLoadedOrRegister(): DOM not yet ready, registering."), document.addEventListener("DOMContentLoaded", function() {
+        handleDomLoaded()
+    })) : (console.log("maybeHandleDomLoadedOrRegister(): DOM already loaded."), handleDomLoaded())
+}
+window.onerror = function(a, b, c, d, e) {
+    try {
+        var f = e && e.stack ? e.stack : "",
+            g = "(" + te.VERSION + ") - " + b + " @ (" + c + ", " + d + "): " + f;
+        window.console.log("Unhandled Text Editor App Error -" + a + ": " + f), logImpression(a, "unhandled_js_error", g, void 0, void 0, !0)
+    } catch (b) {
+        window.console.log("*** Unhandled App Error: " + a + " - " + b)
+    }
+};
+
+function loadScript(a, b, c) {
+    var d = document.createElement("script");
+    d.type = "text/javascript", d.onload = function() {
+        b && b()
+    }, d.onerror = function(a) {
+        c && c(a)
+    }, d.src = a, console.log("LOAD SCRIPT: " + a);
+    try {
+        document.head.appendChild(d)
+    } catch (a) {
+        c(a)
+    }
+}
+maybeHandleDomLoadedOrRegister();
+function loadMainAppScript() {
+    loadScript("core-2-" + APP_MINOR_VERSION + APP_REVISION + (APP_IS_MINIFIED_RELEASE ? "-min" : "") + ".js", bindFn(onMainAppScriptLoaded), bindFn(onMainAppScriptLoadError))
+}
+
+function loadAceEditorScript() {
+    loadScript("../lib/ace-src-min-noconflict/ace.js", bindFn(onAceEditorScriptLoaded), bindFn(onAceEditorScriptLoadError))
+}
+
+function loadJsChardetScript() {
+    loadScript("../lib/jschardet3-0-0.min.js", bindFn(onJsChardetScriptLoaded), bindFn(onJsChardetScriptLoadError))
+}
 app.loadResource('STYLESHEET','editor.css');
 app.loadResource('SCRIPT','core.js');
 var contain = document.getElementById('app_container');
@@ -150,3 +294,5 @@ contain.innerHTML = `
     <div id='text_area'></div>\n
 </div>
 `;
+
+isSupportedBrowser ? (loadMainAppScript(), loadAceEditorScript(), loadJsChardetScript(), , window.console.log("Skipping loading additional scripts for unsupported browser."));
