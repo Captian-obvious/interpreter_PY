@@ -1,8 +1,8 @@
 window.app = {};
-window.STATE = {};
+app.STATE = {};
 app.VERSION = '1.0.0';
 app.CURRENT_SESSION = null;
-app.EDITOR_VERSION = '1.0.0';
+app.EDITOR_VERSION = '1';
 app.REQUEST_CLIENT='1mmdeje93oa8745t4jtg4jj4o4045utj0945h49432j3';
 app.EDITOR = null;
 app.APP_NAME='Python Interpreter';
@@ -13,7 +13,6 @@ app.CURRENT_USER = null;
 app.IS_LOADED = false;
 app.CURRENT_MODE = 'ace/mode/python';
 app.CURRENT_DOCUMENT = null;
-app.NEW_DOCUMENT = null;
 app.ERROR = null;
 app.ERROR_MESSAGES = {
     ERR_NO_CLIENT: 'ERROR: Client Not Specified',
@@ -115,11 +114,11 @@ function isForDirectNewFlow() {
 }
 
 function isForCreateNew() {
-    return "create" == STATE.action && !getFileId()
+    return "create" == app.STATE.action && !getFileId()
 }
 
 function isForOpen() {
-    return "open" == STATE.action && !!getFileId()
+    return "open" == app.STATE.action && !!getFileId()
 }
 
 function getStateUserId() {
@@ -132,24 +131,24 @@ function hasReferringApp() {
 }
 
 function clearReferringApp() {
-    STATE.referringApp = null
+    app.STATE.referringApp = null
 }
 
 function getReferringAppName() {
-    return STATE.referringApp
+    return app.STATE.referringApp
 }
 
 function getParentFolderId() {
-    return STATE.folderId
+    return app.STATE.folderId
 }
 
 function getFileId() {
-    var a = STATE.ids;
+    var a = app.STATE.ids;
     return a ? a.length && 0 < a.length ? a[0] : null : null
 }
 
 function clearState() {
-    STATE = {}
+    app.STATE = {}
 }
 
 function parseUrlState() {
@@ -267,7 +266,7 @@ function loadScript(a, b, c) {
 }
 maybeHandleDomLoadedOrRegister();
 function loadMainAppScript() {
-    loadScript("core-2-" + APP_MINOR_VERSION + APP_REVISION + (APP_IS_MINIFIED_RELEASE ? "-min" : "") + ".js", bindFn(onMainAppScriptLoaded), bindFn(onMainAppScriptLoadError))
+    loadScript("core-2-" + app.MINOR_VERSION + app.REVISION + (app.IS_MINIFIED_RELEASE ? "-min" : "") + ".js", bindFn(onMainAppScriptLoaded), bindFn(onMainAppScriptLoadError))
 }
 
 function loadAceEditorScript() {
