@@ -10,8 +10,8 @@ app.EDITOR = null;
 app.APP_NAME='Python Interpreter';
 app.BOOTLOADER = '82jdm43j3499';
 app.APP_RESOURCES = {
-    jschardetLoaded = false,
-    aceEditorLoaded = false,
+    jschardetLoaded: false,
+    aceEditorLoaded: false,
 };
 app.APP_CONFIG = {
         clientId: "591525900269-94ok9krafau8qa24666btvccmsfnq5fp.apps.googleusercontent.com",
@@ -43,9 +43,7 @@ hasJsChardetScriptBeenAutoRetried = false,
 hasAceEditorScriptBeenAutoRetried = false,
 isAppLoadFailure = false,
 appLoadFailureUiShown = false,
-appLoadFailureMessage = "",
-aceEditorLoaded = false,
-jschardetLoaded = false;
+appLoadFailureMessage = "";
 app.CORE = null;
 app.CURRENT_USER = null;
 app.IS_LOADED = false;
