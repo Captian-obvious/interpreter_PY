@@ -441,10 +441,10 @@ function loadAdSenseScript() {
 }
 
 function loadAceEditorScript() {
-    loadScript("lib/ace-src-min-noconflict/ace.js", bindFn(onAceEditorScriptLoaded), bindFn(onAceEditorScriptLoadError))
+    loadScript("../lib/ace-src-min-noconflict/ace.js", bindFn(onAceEditorScriptLoaded), bindFn(onAceEditorScriptLoadError))
 }
 
 function loadJsChardetScript() {
-    loadScript("lib/jschardet3-0-0.min.js", bindFn(onJsChardetScriptLoaded), bindFn(onJsChardetScriptLoadError))
+    loadScript("../lib/jschardet3-0-0.min.js", bindFn(onJsChardetScriptLoaded), bindFn(onJsChardetScriptLoadError))
 }
 isSupportedBrowser ? (loadGapiScript(), loadMainAppScript(), loadAnalyticsScript(), loadAceEditorScript(), loadJsChardetScript(), true ? loadAdSenseScript() : console.log("Skipping AdSense load.")) : (logImpression("Unsupported browser: Skipping Script Load.", "app_load"), window.console.log("Skipping loading additional scripts for unsupported browser."));
