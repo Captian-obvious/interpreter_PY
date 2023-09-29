@@ -19,6 +19,33 @@ app.APP_CONFIG = {
         scopes: "openid email profile https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.install",
         apiKey: "AIzaSyAHcWeACQ2g-3dCbm46uITUOHGIRQN304s",
 };
+app.OTHER_DATA = {
+    firstAuthIsPending = true,
+    firstAuthSuccessful = false,
+    domLoaded = false,
+    CURRENT_AUTH_USER = 0,
+    CURRENT_USER_INFO = null,
+    CLAIM = null,
+    ID_TOKEN = null,
+    ACCESS_TOKEN = null,
+    isForDirectNew = isUrlParamKeyPresent("new"),
+};
+app.MAJOR_VERSION = 2,
+app.MINOR_VERSION = 11,
+app.REVISION = "",
+app.IS_MINIFIED_RELEASE = !0,
+app.GOOGLE_ANALYTICS_ID = "G-4SML323S4Y",
+var hasMainAppScriptBeenAutoRetried = false,
+hasGapiScriptBeenAutoRetried = false,
+hasAnalyticsScriptBeenAutoRetried = false,
+hasAdSenseScriptBeenAutoRetried = false,
+hasJsChardetScriptBeenAutoRetried = false,
+hasAceEditorScriptBeenAutoRetried = false,
+isAppLoadFailure = false,
+appLoadFailureUiShown = false,
+appLoadFailureMessage = "",
+aceEditorLoaded = false,
+jschardetLoaded = false;
 app.CORE = null;
 app.CURRENT_USER = null;
 app.IS_LOADED = false;
