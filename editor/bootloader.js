@@ -19,17 +19,15 @@ app.APP_CONFIG = {
         scopes: "openid email profile https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.install",
         apiKey: "AIzaSyAHcWeACQ2g-3dCbm46uITUOHGIRQN304s",
 };
-app.OTHER_DATA = {
-    firstAuthIsPending = true,
-    firstAuthSuccessful = false,
-    domLoaded = false,
-    CURRENT_AUTH_USER = 0,
-    CURRENT_USER_INFO = null,
-    CLAIM = null,
-    ID_TOKEN = null,
-    ACCESS_TOKEN = null,
-    isForDirectNew = isUrlParamKeyPresent("new"),
-};
+firstAuthIsPending = true,
+firstAuthSuccessful = false,
+domLoaded = false,
+CURRENT_AUTH_USER = 0;
+CURRENT_USER_INFO = null;
+CLAIM = null;
+ID_TOKEN = null;
+ACCESS_TOKEN = null;
+isForDirectNew = isUrlParamKeyPresent("new"),
 app.MAJOR_VERSION = 2,
 app.MINOR_VERSION = 11,
 app.REVISION = "",
