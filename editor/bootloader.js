@@ -56,15 +56,8 @@ app.loadResource = function(t,src){
     };
 };
 app.loadResource('STYLESHEET','editor.css');
-if (app.ERROR!=true) {
-    app.loadResource('STYLESHEET','fonts.css');
-};
-if (app.ERROR!=true) {
-    app.loadResource('SCRIPT','core.js');
-};
-if (app.ERROR!=true) {
-    app.loadResource('SCRIPT','buttons.js');
-};
+app.loadResource('STYLESHEET','fonts.css');
+app.loadResource('SCRIPT','core.js');
 if (app.ERROR!=true) {
     var contain = document.getElementById('app_container');
     contain.innerHTML = `
