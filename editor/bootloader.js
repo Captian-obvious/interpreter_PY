@@ -1,5 +1,6 @@
 window.app = {};
 app.STATE = {};
+var MAINAPP = null;
 app.VERSION = '1.0.0';
 app.IS_MINIFIED_RELEASE = false;
 app.CURRENT_SESSION = null;
@@ -9,8 +10,8 @@ app.EDITOR = null;
 app.APP_NAME='Python Interpreter';
 app.BOOTLOADER = '82jdm43j3499';
 app.APP_RESOURCES = {
-    jschardetLoaded = false;
-    aceEditorLoaded = false;
+    jschardetLoaded = false,
+    aceEditorLoaded = false,
 };
 app.CORE = null;
 app.CURRENT_USER = null;
