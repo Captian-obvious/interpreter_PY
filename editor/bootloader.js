@@ -13,6 +13,12 @@ app.APP_RESOURCES = {
     jschardetLoaded = false,
     aceEditorLoaded = false,
 };
+app.APP_CONFIG = {
+        clientId: "591525900269-94ok9krafau8qa24666btvccmsfnq5fp.apps.googleusercontent.com",
+        appId: "591525900269",
+        scopes: "openid email profile https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.install",
+        apiKey: "AIzaSyAHcWeACQ2g-3dCbm46uITUOHGIRQN304s",
+};
 app.CORE = null;
 app.CURRENT_USER = null;
 app.IS_LOADED = false;
