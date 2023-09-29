@@ -29,25 +29,14 @@ app.HANDLE_ERROR = function(error,arg) {
     };
     return returned
 };
-app.checkResource = function(src) {
-    var video = document.createElement('img');
-    video.onload = function() {
-    };
-    video.onerror = function() {
-        alert(app.HANDLE_ERROR(app.ERROR_MESSAGES.ERR_RESOURCES_FAILED_LOAD,src));
-    };
-    video.src = src;
-};
 app.loadResource = function(t,src){
     if (t=='SCRIPT'){
-        app.checkResource(src);
         var v = document.createElement('script');
         v.setAttribute('src',src);
         v.setAttribute('data-client',app.REQUEST_CLIENT);
         document.head.appendChild(v);
     };
     if (t=='STYLESHEET'){
-        app.checkResource(src);
         var v = document.createElement('link');
         v.setAttribute('rel', 'stylesheet')
         v.setAttribute('href',src);
@@ -56,7 +45,6 @@ app.loadResource = function(t,src){
     };
 };
 app.loadResource('STYLESHEET','editor.css');
-app.loadResource('STYLESHEET','fonts.css');
 app.loadResource('SCRIPT','core.js');
 var contain = document.getElementById('app_container');
 contain.innerHTML = `
