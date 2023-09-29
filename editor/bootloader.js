@@ -84,6 +84,24 @@ window.onerror = function(a, b, c, d, e) {
     }
 };
 
+function handleDomLoaded() {
+    try {
+        if (domLoaded) return;
+        if (domLoaded = !0, console.log("In handle Dom Loaded(). domLoaded: " + domLoaded + "; isSupportedBrowser: " + isSupportedBrowser), !adsenseScriptLoadError && adLoadedDuringInit && isSupportedBrowser || (showEl(document.getElementById("topBanner"), !1), showEl(document.getElementById("adHeading"), !1), document.getElementById("mainEditorContainer").classList.add("adjustedHeightForNoAdShown"), document.getElementById("mainScrollableContent").classList.add("adjustedHeightForNoAdShown"), document.getElementById("unsupportedBrowserContent").classList.add("adjustedHeightForNoAdShown"), document.getElementById("appLoadErrorContent").classList.add("adjustedHeightForNoAdShown"), document.getElementById("mainBackgroundSpinner").classList.add("adjustedHeightForNoAdShownBackgroundSpinner")), !isSupportedBrowser) return void updateUiAfterDomLoadedForUnsupportedBrowser();
+        if (isAppLoadFailure) return void maybeUpdateUiAForAppLoadFailure(appLoadFailureMessage);
+        document.getElementById("copyright").textContent += " v" + app.VERSION, updateUiForDevice();
+        var a = null != getFileId(),
+            b = a ? getReferringSource() : "general";
+        a && "gmail" != b && (b = "drive");
+        var c = "drive" == b,
+            d = "gmail" == b,
+            e = !(c || d || isForDirectNew);
+        document.getElementById("startPageIconImgDrive").removeAttribute("visibilityHidden"), showEl(document.getElementById("startPageIconImgGeneral"), e || isForDirectNew), showEl(document.getElementById("startPageIconImgGmail"), d), showEl(document.getElementById("startPageIconImgDrive"), c), showEl(document.getElementById("startPageGeneralDetails"), e), showEl(document.getElementById("startPageGmailDetails"), d), showEl(document.getElementById("startPageDriveDetails"), c), showEl(document.getElementById("startPageNewDetails"), isForDirectNew), document.getElementById("startPageDriveDetails").style.visibility = "", showEl(document.getElementById("startPagePrompt"), !0), document.getElementById("startPagePrompt").style.visibility = "", MAINAPP && (MAINAPP.initAfterDomLoaded(getFileId()), EDITOR && MAINAPP.initializeEditorAfterDomLoaded());
+    } catch (a) {
+        throw logImpression("handle_dom_loaded_err", "app_load", a), a;
+    };
+};
+
 function onMainAppScriptLoaded() {
     console.log("main_app_script_loaded");
     try {
